@@ -8,13 +8,13 @@ def inputParameters():
     yellowPrint("In addition to entering some parameters, you can also modify all parameters in config.py")
     parser = argparse.ArgumentParser()
     parser.description = "please enter some parameters"
-    parser.add_argument(
-        "-b",
-        "--BHiveCount",
-        help="BHive Count Num (maybe useless depends on bin/bhive use",
-        dest="BHiveCount",
-        type=int, default="500"
-    )
+    # parser.add_argument(
+    #     "-b",
+    #     "--BHiveCount",
+    #     help="BHive Count Num (maybe useless depends on bin/bhive use",
+    #     dest="BHiveCount",
+    #     type=int, default="500"
+    # )
     parser.add_argument(
         "-p",
         "--ProcessNum",
@@ -27,7 +27,7 @@ def inputParameters():
         "--timeout",
         help="sub program interrupt time(eg. llvm-mca, bhive, OSACA. less time causes less useful output",
         dest="timeout",
-        type=int, default="120"
+        type=int, default="60"
     )
     parser.add_argument(
         "-d",
@@ -39,12 +39,12 @@ def inputParameters():
         default="yes",
     )
     args = parser.parse_args()
-    glv._set("BHiveCount",args.BHiveCount)
+    # glv._set("BHiveCount",args.BHiveCount)
     glv._set("ProcessNum",args.ProcessNum)
     glv._set("timeout",args.timeout)
     glv._set("debug",args.debug)
     pPrint(glv.GLOBALS_DICT)
-    passPrint("parameter BHiveCount is : %s" % args.BHiveCount)
+    # passPrint("parameter BHiveCount is : %s" % args.BHiveCount)
     passPrint("parameter ProcessNum is : %s" % args.ProcessNum)
     passPrint("parameter timeout is : %d " % args.timeout)
     passPrint("parameter debug is : %s " % args.debug)
