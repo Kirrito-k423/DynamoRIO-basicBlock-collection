@@ -1,28 +1,11 @@
-# Bhive VS llvm-mca (vs OSACA) on ARMv7
-Reimplementation of the BHive profiler on ARMv7 kunpeng processor. The original can be found here: https://github.com/ithemal/bhive.
+# DynamoRIO basic-block collection
+
+通过DynamoRIO收集各种应用的make test或者其他benchmark的basic-block结果(TB级别的汇编log文件)，通过筛选和去重整理出供BHive测试运行的基本块测试集。
 
 ## 安装
-### 安装Bhive
-位于 `./bhive-reg`下，`make`产生`bhive`可执行文件
-```
-qcjiang@brainiac1:~/tests$ bhive \xc1\x02\x40\xb9\xe0\x03\x01\x2a\x00\x00\x18\xca\x00\xfc\x41\xd3\xd6\x12\x00\x91\xc1\x02\x40\xb9\xe0\x03\x01\x2a
+### 安装DynamoRIO
 
-[CHILD] Test block and tail copied.
-[CHILD] Aux. page mapped at 0x700000000000.
-[PARENT] Child stack at 0xfffff407ff90 saved.
-Signo: 19
-Addr: 0x3ed0011e114
-Event num: 229
-```
-### 安装llvm-mca
-代码在https://github.com/qcjiang/llvm-project，有个tsv110的branch，直接在github上fork这个仓库，之后有提交的话提pull request
-```
-mkdir build && cd build
-cmake -DLLVM_TARGETS_TO_BUILD="AArch64" -DCMAKE_BUILD_TYPE=Debug ../llvm
-#cmake  -DCMAKE_BUILD_TYPE=Debug ../llvm -v
-
-make llvm-mca -j VERBOSE=1
-```
+请参考 https://github.com/DynamoRIO/dynamorio
 ### python库
 ```
 pip install -r requirements.txt
@@ -79,7 +62,7 @@ python3 ./src/main.py -b 500 -p 20 -d no
 ## To do
 ### bugs（已经修复）
 
-python的子程序实现有问题，运行中，会有bhive-reg遗留下来（多达20个，需要按照下面手动kill，这也是核数建议为总核数的1/3的原因
+python的子程序实现有问题，运行中，会有僵尸进程遗留下来（多达20个，需要按照下面手动kill，这也是核数建议为总核数的1/3的原因
 
 ### check process create time
 ```
