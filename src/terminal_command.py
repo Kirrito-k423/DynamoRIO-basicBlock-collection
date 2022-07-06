@@ -19,15 +19,27 @@ def checkFileByRegex(nameRegex, checkPath):
         if re.search(nameRegex,lsEntry):
             colorPrint("%s existed"% nameRegex,"blue")
             return True
-        else:
-            errorPrint("%s NOT existed"% nameRegex)
-            return False
+    errorPrint("%s NOT existed"% nameRegex)
+    return False
 
+def checkDiskUsage():
+    command="df -h ."
+    yellowPrint(command)
+    duText=TIMEOUT_severalCOMMAND(command,glv._get("findTimeout"))
+    ic(duText)
+    UsagePercent = re.search("([0-9]*)\%",duText[1]).group(1)
+    ic(UsagePercent)
+    if int(UsagePercent)>90:
+        errorPrint("Disk is near fulled %s%" % UsagePercent)
+        return False
+    else:
+        colorPrint("DiskUsage is OK {}%".format(UsagePercent), "magenta")
+        return True
 
-def checkFile(taskfilePath):
-    tmpOSACAfilePath=taskfilePath+"/tmpOSACAfiles"
-    mkdir(tmpOSACAfilePath)
-    return tmpOSACAfilePath
+# def checkFile(taskfilePath):
+#     tmpOSACAfilePath=taskfilePath+"/tmpOSACAfiles"
+#     mkdir(tmpOSACAfilePath)
+#     return tmpOSACAfilePath
 
 def mkdir(path):
 	folder = os.path.exists(path)
@@ -83,7 +95,7 @@ def TIMEOUT_severalCOMMAND(command, timeout=10):
         time.sleep(0.2)
         now = datetime.datetime.now()
         ic("TIMEOUT_COMMAND-During",process.pid,process.poll(),(now - start).seconds)
-        if (now - start).seconds> timeout:
+        if (now - start).seconds > timeout:
             # BHive有子进程，需要杀死进程组。但是需要新生成进程组，不然会把自己kill掉
             os.killpg(os.getpgid(process.pid), signal.SIGKILL)
             # os.killpg(process.pid, signal.SIGTERM) SIGTERM不一定会kill，可能会被忽略，要看代码实现

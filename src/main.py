@@ -4,7 +4,7 @@ import config  # 加载配置
 
 import global_variable as glv
 from input_process import inputParameters, isIceEnable
-from terminal_command import mkdir,findTaskList
+from terminal_command import mkdir,findTaskList,checkDiskUsage
 from DynamoRIO import DynamoRIO_Offline
 from tsjPython.tsjCommonFunc import *
 # from excel import *
@@ -26,6 +26,8 @@ def main():
         taskNum+=1
         passPrint("exeTask {:>3d}/{:>3d}: {}".format(taskNum,len(taskList),exeTask))
         DynamoRIO_Offline(exeTask)
+        if not checkDiskUsage():
+            break
     # isFirstSheet=1
     # taskList = glv._get("taskList")
     # for taskKey, taskName in taskList.items():
