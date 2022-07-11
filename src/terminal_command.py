@@ -92,7 +92,7 @@ def TIMEOUT_severalCOMMAND(command, timeout=10):
     ic("TIMEOUT_COMMAND-before",process.pid,process.poll())
     # while process.poll() != 208 and  process.poll() != 0: # poll()(好像BHive208是正常结束)返回0 正常结束， 1 sleep， 2 子进程不存在，-15 kill，None 在运行
     while process.poll()==None or process.poll()==1:
-        time.sleep(1)
+        time.sleep(2)
         now = datetime.datetime.now()
         ic("TIMEOUT_COMMAND-During",process.pid,process.poll(),(now - start).seconds)
         if (now - start).seconds > timeout:

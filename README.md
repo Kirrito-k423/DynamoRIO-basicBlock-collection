@@ -7,7 +7,8 @@
 1. 先采集offline raw文件
 2. 分析raw文件，产生log
 	1. (原本的raw文件先解析成trace文件，会变大几倍倍。
-	2. trace文件翻译产生汇编log很慢。17h+
+	2. trace文件翻译产生汇编log很慢。17h+ 每秒6.5MB
+		1. 这部分无法并行。DynamoRIO提供的选项`-jobs`对这部分并行无用
 3. 筛选和去重log，得到BHive所需文件
 
 ### 采集数据所需空间
@@ -16,6 +17,8 @@
 2. raw文件解析变成230GB trace文件
 3. 导出汇编log文件 300GB+？(没结束)
 4. 汇编精简
+
+压缩17M，offline收集数据(2.5G)，分析offline耗时19分钟，生成9.6Glog文件
 
 ## 安装
 ### 安装DynamoRIO
